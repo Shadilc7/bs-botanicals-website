@@ -10,7 +10,7 @@ These are screenshots of the built website, viewable directly on GitHub. The web
 
 [Full desktop screenshot](docs/previews/desktop-full.png) · [Full mobile screenshot](docs/previews/mobile-full.png)
 
-[Gemstone browsing](docs/previews/gemstones.png) · [Enquiry form](docs/previews/enquiry-form.png) · [Mobile wellness concepts](docs/previews/wellness-mobile.png) · [Supplied tea packaging](docs/previews/wellness-packaging.png)
+[Gemstone browsing](docs/previews/gemstones.png) · [Botanical browsing](docs/previews/botanicals.png) · [Gemstone banner](docs/previews/gemstone-banner.png) · [Enquiry form](docs/previews/enquiry-form.png) · [Mobile wellness concepts](docs/previews/wellness-mobile.png) · [Supplied tea packaging](docs/previews/wellness-packaging.png)
 
 ## Interface improvements
 
@@ -18,6 +18,7 @@ These are screenshots of the built website, viewable directly on GitHub. The web
 - A two-line desktop hero and a mobile enquiry action visible in the first screen.
 - A simpler homepage with repeated product sections removed, plus a clear sourcing process.
 - Searchable gemstone cards and botanical search with ingredient-group filters, result counts and empty-state recovery.
+- Individual generated illustrations for six rough gemstone varieties and eight raw botanical ingredients, plus a dedicated gemstone banner. Visible labels distinguish the artwork from actual stock photography.
 - Product-specific enquiry links that go straight to a prefilled form, with a visible product summary.
 - Inline form validation, keyboard focus management, duplicate-send prevention and an email fallback when direct delivery fails.
 - A mobile menu with focus containment, Escape dismissal and scroll restoration; wellness concepts use readable two-column cards on phones.
@@ -43,7 +44,7 @@ npm test            # API validation, origin checks, gating, failure and rate-li
 npm run test:e2e    # Desktop/mobile browser and automated accessibility checks
 ```
 
-This revision passed seven API tests and 34 desktop/mobile browser tests against the production server, including automated accessibility checks on all seven routes. An additional 42 production layout checks covered 320, 640, 768, 1024, 1280 and 1440px widths. After installing the supplied images, the production build and eight relevant desktop/mobile checks passed, including image loading, navigation, layout and accessibility. Real inbox delivery remains unverified.
+The API and enquiry workflows were previously verified with seven API tests and 34 desktop/mobile browser tests against the production server. For the current image update, the production build and 14 relevant desktop/mobile browser checks passed, covering asset loading, navigation, product enquiries, search, ingredient filters, readable layouts and automated WCAG accessibility checks on all seven routes. Additional responsive image checks cover the Home, Gemstones and Botanicals pages at 320, 390, 640, 768, 1024 and 1440px widths. Real inbox delivery remains unverified.
 
 Set `PLAYWRIGHT_BASE_URL` to a running production server to exercise that build; otherwise browser tests start or reuse the Vite development server.
 

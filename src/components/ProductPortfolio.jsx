@@ -12,7 +12,7 @@ const ingredientGroups = {
 
 function ProductArt({ name, color, gemstone, index }) {
   const photo = assets.products[name];
-  if (photo) return <div className="product-art product-photo"><img src={photo.src} alt={photo.alt} loading="lazy"/></div>;
+  if (photo) return <div className="product-art product-photo"><img src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" decoding="async"/>{photo.illustrative && <span className="art-caption">Illustration</span>}</div>;
   return <div className={`product-art ${gemstone ? 'crystal-art' : `plant-art plant-art-${index % 4}`}`} style={{ '--product-color': color || '#7a8b66' }}>
     {gemstone ? <svg viewBox="0 0 240 170" fill="none" aria-hidden="true">
       <ellipse cx="125" cy="143" rx="71" ry="10" fill="currentColor" opacity=".08"/>
