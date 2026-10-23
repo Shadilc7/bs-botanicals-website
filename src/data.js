@@ -33,14 +33,6 @@ export const botanicals = [
   ['Ximenia', 'SEEDS & KERNELS', 'Raw seeds and kernels for processors exploring botanical ingredient options.'],
 ];
 
-export const concepts = [
-  { name: 'Hormonal Support', color: '#b77d93', motif: 'flower' },
-  { name: 'Womb Support', color: '#819876', motif: 'leaf' },
-  { name: 'Intimate Support', color: '#c58291', motif: 'flower' },
-  { name: 'Menopause Support', color: '#9681a7', motif: 'sun' },
-  { name: 'Metabolism Support', color: '#bca179', motif: 'leaf' },
-];
-
 export const categories = ['Rough gemstones', 'Botanicals & superfoods', 'Trade or distribution partnership', 'Women’s teas', 'Other'];
 export const categoryMap = { gemstones: categories[0], botanicals: categories[1], partnership: categories[2], wellness: categories[3] };
 

@@ -160,7 +160,7 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
 .wellness-teaser-art > svg { color: var(--gold-text); height: 46px; width: 46px; margin-bottom: 22px; }
 .wellness-teaser-art > p { font-family: var(--serif); font-size: 33px; line-height: 1.15; color: var(--wine); margin-bottom: 22px; }
 .wellness-teaser-art > img { object-fit: contain; max-height: 310px; }
-.wellness-teaser-art.has-photo { padding: 0; min-height: 0; aspect-ratio: 1672 / 941; border-radius: 4px; overflow: hidden; background: #f4eee5; }
+.wellness-teaser-art.has-photo { padding: 0; min-height: 0; aspect-ratio: 1672 / 941; border: 0; border-radius: 0; background: transparent; }
 .wellness-teaser-art.has-photo > img { width: 100%; height: 100%; max-height: none; object-fit: contain; }
 .status-pill { display: inline-block; border: 1px solid #bf96a5; border-radius: 24px; color: var(--wine); font-size: 11px; letter-spacing: .5px; padding: 6px 13px; line-height: 1.5; }
 
@@ -304,22 +304,17 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
 .wellness-story p { font-size: 16px; line-height: 1.9; margin-bottom: 22px; }
 .wellness-story .eyebrow { font-size: 10px; }
 .planned-collection { background: #f8f0eb; padding-block: 65px; }
-.concept-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; }
-.concept-card { text-align: center; min-width: 0; }
-.concept-art { height: 225px; position: relative; overflow: hidden; display: grid; place-items: center; border: 1px solid color-mix(in srgb, var(--concept-color) 40%, transparent); background: color-mix(in srgb, var(--concept-color) 13%, #fcfaf6); border-radius: 3px; }
-.concept-art::before { content: ''; position: absolute; inset: 10px; border: 1px solid color-mix(in srgb, var(--concept-color) 25%, transparent); }
-.concept-art > svg { position: absolute; width: 125px; height: 160px; bottom: -10px; right: -10px; color: var(--concept-color); transform: rotate(-15deg); }
-.concept-number { position: absolute; left: 22px; top: 20px; font-size: 13px; color: #775548; letter-spacing: 1px; }
-.concept-watermark { position: absolute; top: 38px; font-family: var(--serif); font-size: 85px; color: var(--wine); opacity: .7; }
-.concept-card h3 { font-family: var(--serif); font-size: 25px; line-height: 1.1; min-height: 55px; margin: 21px 0 10px; letter-spacing: -.02em; }
+.tea-collection { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 48px 28px; }
+.tea-product { flex: 0 1 calc((100% - 56px) / 3); min-width: 0; margin: 0; text-align: center; }
+.tea-product-image { display: block; border-radius: 3px; }
+.tea-product-image img { display: block; width: 100%; height: auto; aspect-ratio: 1122 / 1402; object-fit: contain; }
+.tea-product h3 { font-family: var(--serif); font-size: 27px; line-height: 1.15; margin: 20px 0 12px; }
+.tea-package-image { background: #f8eee9; }
+.tea-package-image img { object-fit: contain; padding: 10px 18px 33px; }
 .development-tag { display: inline-block; font-size: 12px; line-height: 1.6; color: #70564f; background: #fcfaf6a6; border: 1px solid #dfd0c9; border-radius: 20px; padding: 4px 11px; }
 .development-notice { max-width: 900px; text-align: center; margin: 42px auto 0; border-top: 1px solid var(--line); padding-top: 28px; }
 .development-notice > span { color: var(--wine); font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
 .development-notice p { font-size: 14px; line-height: 1.9; margin-top: 14px; }
-.approved-collection { margin: 0 auto 40px; max-width: 1000px; }
-.approved-collection img { width: 100%; height: auto; object-fit: contain; border-radius: 4px; }
-.approved-collection a { display: block; }
-.approved-collection figcaption { text-align: center; font-size: 14px; margin-top: 16px; color: var(--muted); }
 .wellness-enquiry { max-width: 800px; padding-block: 65px; text-align: center; }
 .wellness-enquiry > svg { color: var(--gold-text); height: 42px; width: 42px; margin-bottom: 20px; }
 .wellness-enquiry .eyebrow { justify-content: center; }
@@ -449,8 +444,6 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
   .product-card h3 { font-size: 32px; }
   .two-column-inner { gap: 40px; }
   .two-column-inner > div + div { padding-left: 32px; }
-  .concept-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
-  .concept-card h3 { min-height: 0; }
   .contact-main { grid-template-columns: 34% 66%; gap: 35px; padding-right: 35px; }
   .enquiry-panel { padding: 30px; }
 }
@@ -496,9 +489,6 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
   .two-column-inner { gap: 30px; }
   .two-column-inner > div + div { padding-left: 25px; }
   .wellness-story { grid-template-columns: 1fr; gap: 28px; }
-  .concept-grid { gap: 25px; }
-  .concept-art { height: 210px; }
-  .concept-card h3 { font-size: 26px; }
   .contact-main { grid-template-columns: 1fr; gap: 35px; padding-right: 0; }
   .enquiry-panel { grid-row: 1; padding: 35px; }
   .contact-aside > p:not(.eyebrow) { max-width: 650px; }
@@ -695,13 +685,6 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
   .wellness-story .eyebrow { font-size: 10px; letter-spacing: 1px; }
   .wellness-story p { font-size: 16px; line-height: 1.95; }
   .planned-collection { padding-block: 42px; }
-  .concept-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 18px; }
-  .concept-card:last-child { grid-column: 1/-1; width: calc(50% - 9px); justify-self: center; }
-  .concept-art { height: 180px; }
-  .concept-art > svg { width: 100px; height: 130px; bottom: -5px; }
-  .concept-number { left: 19px; top: 18px; font-size: 12px; }
-  .concept-watermark { font-size: 74px; top: 30px; }
-  .concept-card h3 { font-size: 26px; min-height: 58px; margin-block: 19px 8px; }
   .development-tag { font-size: 11px; padding: 4px 9px; }
   .development-notice { margin-top: 32px; padding-top: 25px; text-align: left; }
   .development-notice > span { font-size: 11px; letter-spacing: .7px; }
@@ -769,13 +752,18 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
   .hero-copy .eyebrow { font-size: 8px; }
   .category-copy, .product-card-copy { padding: 21px; }
   .enquiry-panel { padding-inline: 17px; }
-  .concept-grid { gap: 25px 14px; }
-  .concept-art { height: 155px; }
-  .concept-card h3 { font-size: 24px; }
   .development-tag { font-size: 10px; padding-inline: 7px; }
-  .concept-card:last-child { width: calc(50% - 7px); }
 }
 @media (prefers-reduced-motion: reduce) {
   :root { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+@media (max-width: 1024px) {
+  .tea-product { flex-basis: calc((100% - 28px) / 2); }
+}
+@media (max-width: 640px) {
+  .tea-collection { gap: 40px; }
+  .tea-product { flex-basis: 100%; max-width: 420px; }
+  .tea-product h3 { font-size: 28px; }
 }

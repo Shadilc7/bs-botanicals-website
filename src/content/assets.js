@@ -2,8 +2,15 @@
 // Product photos are keyed by the exact names in src/data.js.
 export const assets = {
   logo: { src: '/images/logo-bs-botanicals-zambia.png', alt: 'B’s Botanicals — Zambia’s Natural Resources', width: 1448, height: 1086 },
-  teaFeature: { src: '/images/tea-box-monogram-garden.webp', alt: 'Pink floral B’s Botanicals tea packaging concept in a garden setting', width: 1448, height: 1086 },
-  teaCollection: { src: '/images/tea-boxes-garden-lineup.webp', alt: 'Five floral B’s Botanicals packaging concepts in pink, green and purple, arranged in a garden', width: 1672, height: 941 },
+  teaFeature: { src: '/images/tea-box-fertility-wellness.webp', alt: 'B’s Botanicals Fertility & Reproductive Wellness tea-box packaging with its printed label', width: 1122, height: 1402 },
+  teaCollection: { src: '/images/tea-boxes-studio-lineup.webp', alt: 'Five B’s Botanicals tea-box packaging concepts with their printed product names', width: 1672, height: 941 },
+  teaProducts: [
+    { name: 'Fertility & Reproductive Wellness', src: '/images/tea-box-fertility-wellness.webp', width: 1122, height: 1402 },
+    { name: 'Weight Loss & Detox', src: '/images/tea-box-weight-loss-detox.webp', width: 1122, height: 1402 },
+    { name: 'Sexual Health & Wellness', src: '/images/tea-box-sexual-health-wellness.webp', width: 1122, height: 1402 },
+    { name: 'Menopause Support', src: '/images/tea-box-menopause-support.webp', width: 1122, height: 1402 },
+    { name: 'Hormonal Balance', src: '/images/tea-box-hormonal-balance.webp', width: 1122, height: 1402 },
+  ],
   hero: { src: '/images/hero.webp', alt: 'Illustrative gemstone and botanical still life' },
   gemstones: { src: '/images/rough-gemstones.webp', alt: 'Illustrative grouping of uncut green, blue, purple and honey-coloured crystals on limestone', width: 1536, height: 1024, illustrative: true },
   botanicals: { src: '/images/botanicals.webp', alt: 'Illustrative arrangement of dried flowers, powders and raw seeds' },

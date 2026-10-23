@@ -7,7 +7,7 @@ function Categories() {
   const cards = [
     { path: '/gemstones', title: 'Rough Gemstones', image: assets.gemstones, number: '01', type: 'gemstone-image', description: 'Explore rough gemstones, individual specimens, samples and parcels, with buyer-specific sourcing on request.', action: 'Explore Gemstones' },
     { path: '/botanicals', title: 'Botanicals & Superfoods', image: assets.botanicals, number: '02', description: 'Discover Zambian raw and minimally processed botanical materials for food, beverage, beauty and wellness applications.', action: 'Explore Botanicals' },
-    { path: '/womens-wellness', title: 'Women’s Herbal Teas', image: assets.teaFeature || assets.teaCollection, number: '03', description: 'Get an introduction to our developing women’s botanical tea collection, inspired by tradition and everyday self-care.', action: 'Discover the Collection' },
+    { path: '/womens-wellness', title: 'Women’s Herbal Teas', image: assets.teaFeature || assets.teaCollection, number: '03', type: 'tea-package-image', description: 'Get an introduction to our developing women’s botanical tea collection, inspired by tradition and everyday self-care.', action: 'Discover the Collection' },
   ];
   return <section className="offer-section section-shell" id="our-products"><div className="section-heading"><div><Eyebrow>Distinctive by nature</Eyebrow><h2>What We Offer</h2></div><p>Zambian natural resources.<br/>Considered sourcing. Global possibilities.</p></div><div className="category-grid">
     {cards.map(card => <Link to={card.path} className="category-card" key={card.path}><div className={`category-image ${card.type || ''} ${!card.image ? 'wellness-art' : ''}`}>

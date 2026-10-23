@@ -110,9 +110,17 @@ test('failed direct delivery preserves the enquiry and never claims it was recei
   await expect(page.getByRole('heading', { name: 'Thank You for Getting in Touch.' })).toHaveCount(0);
 });
 
-test('wellness concepts have development labels and no checkout', async ({ page }) => {
+test('wellness shows the five supplied labelled box images with full-size links and no checkout', async ({ page }) => {
   await page.goto('/womens-wellness');
-  await expect(page.locator('.concept-card')).toHaveCount(5);
+  await expect(page.locator('.tea-product')).toHaveCount(5);
+  await expect(page.locator('.concept-art')).toHaveCount(0);
+  for (const image of await page.locator('.tea-product img').all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect(image).toHaveAttribute('src', /\/images\/tea-box-(fertility-wellness|weight-loss-detox|sexual-health-wellness|menopause-support|hormonal-balance)\.webp$/);
+    await expect(image.locator('..')).toHaveAttribute('href', await image.getAttribute('src'));
+    await expect(image.locator('..')).toHaveAttribute('target', '_blank');
+    expect(await image.evaluate(img => img.naturalWidth)).toBeGreaterThan(0);
+  }
   await expect(page.locator('.development-tag')).toHaveCount(5);
   await expect(page.getByText('not yet available for purchase', { exact: false })).toBeVisible();
   await expect(page.getByRole('button', { name: /buy|add to cart|checkout/i })).toHaveCount(0);
@@ -240,7 +248,7 @@ test('body copy is readable, actions are tappable and mobile hero enquiry stays 
     const box = await page.locator('.hero-actions .button-primary').boundingBox();
     expect(box.y + box.height).toBeLessThan(page.viewportSize().height);
     await page.goto('/womens-wellness');
-    for (const card of await page.locator('.concept-card').all()) expect((await card.boundingBox()).width).toBeGreaterThanOrEqual(130);
-    expect(await page.locator('.concept-card h3').first().evaluate(element => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(24);
+    for (const card of await page.locator('.tea-product').all()) expect((await card.boundingBox()).width).toBeGreaterThanOrEqual(300);
+    expect(await page.locator('.tea-product h3').first().evaluate(element => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(24);
   }
 });

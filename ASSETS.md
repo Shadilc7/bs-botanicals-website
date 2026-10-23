@@ -10,7 +10,7 @@ The gemstone, botanical and Zambia landscape images were generated for this proj
 
 Original generated PNGs remain in `/workspace/generated_images`; website versions are WebP encodings for bandwidth efficiency. They do not reproduce the inaccessible assets from the linked ChatGPT threads exactly.
 
-The SVG botanical line art and monogram favicon are custom code. The supplied floral logo now replaces the reconstructed identity in the header and footer. The five wellness panels remain decorative illustrations of the revised planned concepts; supplied garden packaging artwork is shown separately without changing those concept names.
+The SVG botanical line art and monogram favicon are custom code. The supplied floral logo now replaces the reconstructed identity in the header and footer. The wellness gallery uses the five supplied individual packaging images with their original printed text. The earlier vector concept panels and unlabelled garden packaging images have been replaced at the owner’s request.
 
 Cormorant Garamond and DM Sans are bundled from Fontsource, with their licences retained in the corresponding npm packages. Lucide icons are provided by `lucide-react` under the ISC licence. Dependencies and their versions are recorded in `package-lock.json`.
 
@@ -20,7 +20,7 @@ Product browsing uses individual generated still-life illustrations, with the cu
 
 Fifteen additional images were generated on 23 October 2026: six rough gemstone studies, eight raw botanical studies and one dedicated rough-gemstone banner. The shared visual treatment uses warm ivory limestone, diffuse daylight and restrained colour. Optimized WebP files retain the generated 1536 × 1024 resolution. Product images load lazily and reserve their display space to avoid layout shifts.
 
-These are generated illustrative compositions, with visible labels on the product cards, Gemstones hero and Home gemstone category. They do not identify actual specimens, establish botanical morphology, represent stock or prove source. In particular, the seed and kernel studies are artistic representations, not identification guides. Original supplier photographs can replace them through the asset registry. The supplied logo and tea packaging files are unchanged.
+These are generated illustrative compositions, with visible labels on the product cards, Gemstones hero and Home gemstone category. They do not identify actual specimens, establish botanical morphology, represent stock or prove source. In particular, the seed and kernel studies are artistic representations, not identification guides. Original supplier photographs can replace them through the asset registry. The supplied logo and installed tea packaging files retain their original file contents.
 
 | Website file | Source generated file | Placement |
 | --- | --- | --- |
@@ -45,9 +45,13 @@ These are generated illustrative compositions, with visible labels on the produc
 | Website file | Placement |
 | --- | --- |
 | `public/images/logo-bs-botanicals-zambia.png` | Header and footer |
-| `public/images/tea-box-monogram-garden.webp` | Home women’s herbal tea category card |
-| `public/images/tea-boxes-garden-lineup.webp` | Home wellness feature and Wellness collection figure |
+| `public/images/tea-box-fertility-wellness.webp` | Home tea category and Wellness gallery |
+| `public/images/tea-box-weight-loss-detox.webp` | Wellness gallery |
+| `public/images/tea-box-sexual-health-wellness.webp` | Wellness gallery |
+| `public/images/tea-box-menopause-support.webp` | Wellness gallery |
+| `public/images/tea-box-hormonal-balance.webp` | Wellness gallery |
+| `public/images/tea-boxes-studio-lineup.webp` | Home wellness feature |
 
-All three are byte-for-byte copies of the supplied archive files. The logo's generous transparent canvas is framed through CSS only, without redrawing or changing the original image. The supplied WebP versions are reused without additional lossy conversion. PNG duplicates and macOS metadata are not included in the website payload.
+All seven files are byte-for-byte copies of the supplied archive files. The original printed artwork and transparency are preserved, with no redrawing or additional lossy conversion. The individual boxes display fully using `object-fit: contain` and link to their original website image for reading the printed labels. The gallery captions match the names printed on these images rather than the earlier placeholder concepts.
 
-The garden images were selected for their consistent visual style and compatibility with the revised developing-collection wording. The alternate individual boxes and studio lineup contain different names and printed benefit or sourcing statements; they have not replaced the revised concept names or been added as product listings. All source variants remain in the original uploaded archive.
+The previously selected unlabelled garden packaging files are no longer used or shipped. All variants remain in the original uploaded archive. The logo’s transparent canvas is framed through CSS only. The collection remains in development, with the existing pre-launch qualifications retained around the supplied artwork.

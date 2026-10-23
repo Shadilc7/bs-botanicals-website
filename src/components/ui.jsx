@@ -1,7 +1,7 @@
-import { ArrowRight, Globe2, Leaf, Handshake, Gem, Mail, MapPin, Plus, Minus, Sprout, Flower2, Sun } from 'lucide-react';
+import { ArrowRight, Globe2, Leaf, Handshake, Gem, Mail, MapPin, Plus, Minus, Sprout } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { concepts, faqs, navigation } from '../data';
+import { faqs, navigation } from '../data';
 import { assets } from '../content/assets';
 
 export function Button({ to, children, secondary = false, className = '', ...props }) {
@@ -52,14 +52,11 @@ export function FAQ({ compact = false }) {
   </section>;
 }
 
-export function CollectionCards({ large = false }) {
-  return <div className={`concept-grid ${large ? 'concept-grid-large' : ''}`}>{concepts.map(({ name, color, motif }, i) => {
-    const Icon = motif === 'leaf' ? Sprout : motif === 'sun' ? Sun : Flower2;
-    return <article className="concept-card" style={{ '--concept-color': color }} key={name}>
-      <div className="concept-art" aria-hidden="true"><span className="concept-number">0{i + 1}</span><Icon strokeWidth={.6}/><span className="concept-watermark">B</span></div>
-      <h3>{name}</h3><span className="development-tag">In development</span>
-    </article>;
-  })}</div>;
+export function TeaCollection() {
+  return <div className="tea-collection">{assets.teaProducts.map(({ name, src, width, height }) => <figure className="tea-product" key={src}>
+    <a className="tea-product-image" href={src} target="_blank" rel="noopener noreferrer" aria-label={`View ${name} packaging at full size (opens in a new tab)`}><img src={src} alt={`B’s Botanicals ${name} tea-box packaging with its printed label`} width={width} height={height} loading="lazy" decoding="async"/></a>
+    <figcaption><h3>{name}</h3><span className="development-tag">In development</span></figcaption>
+  </figure>)}</div>;
 }
 
 export function ContactDetails() {
