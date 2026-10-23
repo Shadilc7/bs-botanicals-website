@@ -214,8 +214,8 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
 .footer-leaf { width: 130px; right: -40px; top: 0; opacity: .14; transform: rotate(-40deg); }
 
 /* Inner pages and clear sourcing information. */
-.page-hero { position: relative; min-height: 520px; display: flex; align-items: center; isolation: isolate; overflow: hidden; background: var(--cream); }
-.page-hero-image { position: absolute; inset: 0 0 0 32%; background-size: cover; background-position: 78% 60%; z-index: -3; }
+.page-hero { position: relative; min-height: 520px; display: flex; align-items: center; isolation: isolate; overflow: hidden; background: var(--ivory); }
+.page-hero-image { position: absolute; inset: 0 0 0 32%; background-size: cover; background-position: 78% 60%; z-index: -3; -webkit-mask-image: linear-gradient(90deg, transparent, #000 35%); mask-image: linear-gradient(90deg, transparent, #000 35%); }
 .page-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #fcfaf6 4%, #fcfaf6f5 32%, #fcfaf6c9 47%, #fcfaf600 78%); z-index: -2; }
 .page-hero-copy { padding-block: 45px 60px; max-width: 690px; }
 .page-hero-copy h1 { font-size: clamp(3rem, 4.5vw, 4.2rem); line-height: 1.02; }
@@ -637,7 +637,7 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
   .page-hero-copy > p:not(.eyebrow) { font-size: 16px; line-height: 1.9; margin: 24px 0 26px; }
   .page-hero-copy .eyebrow { font-size: 10px; letter-spacing: 1px; }
   .page-hero-copy .eyebrow::after { display: none; }
-  .page-hero-image { inset: auto 0 0; height: 280px; background-position: 76% 65%; }
+  .page-hero-image { inset: auto 0 0; height: 280px; background-position: 76% 65%; -webkit-mask-image: linear-gradient(180deg, transparent, #000 38%); mask-image: linear-gradient(180deg, transparent, #000 38%); }
   .page-hero::after { background: linear-gradient(180deg, #fcfaf6 0%, #fcfaf6 58%, #fcfaf6c9 70%, #fcfaf600 87%); }
   .breadcrumbs { margin-bottom: 20px; font-size: 12px; flex-wrap: wrap; gap: 5px 11px; }
   .breadcrumbs a { min-height: 44px; }

@@ -12,6 +12,8 @@ These are screenshots of the built website, viewable directly on GitHub. The web
 
 [Gemstone browsing](docs/previews/gemstones.png) · [Botanical browsing](docs/previews/botanicals.png) · [Gemstone banner](docs/previews/gemstone-banner.png) · [Enquiry form](docs/previews/enquiry-form.png) · [Mobile tea packaging](docs/previews/wellness-mobile.png) · [Homepage tea packaging](docs/previews/wellness-packaging.png) · [Individual tea boxes](docs/previews/wellness-gallery.png)
 
+[Blended About hero](docs/previews/about-hero.png) · [Blended Botanicals hero](docs/previews/botanicals-hero.png)
+
 ## Interface improvements
 
 - Readable 16–17px main copy, 14px desktop navigation, stronger contrast and larger tap targets.
