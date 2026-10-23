@@ -66,6 +66,14 @@ Category CTAs preselect the enquiry type. Individual product links also prefill 
 
 ## Enquiries: working preview and production delivery
 
+### Deploy a preview on Vercel
+
+Import `Shadilc7/bs-botanicals-website` from GitHub into Vercel and deploy the `main` branch. Use the repository root, the **Vite** framework preset, **Node.js 24.x**, build command `npm run build`, and output directory `dist`. No environment variables are needed for the email-draft preview. The included `vercel.json` supplies the single-page app routing fallback, so direct visits and refreshes on `/about`, `/gemstones`, `/botanicals`, `/womens-wellness`, `/contact` and `/privacy` render the website.
+
+Vercel serves the built frontend; it does not run `npm start` or the existing standalone Node mail server with this configuration. The contact form detects the absent API and uses the local email-draft workflow described below. Adding SMTP variables alone will not enable direct delivery on Vercel: that requires a serverless API integration, deployment-appropriate rate limiting, the reviewed Privacy Notice and a real inbox test. Keep mail secrets out of `VITE_` variables.
+
+This is ready for a shareable preview deployment. The production build passed, all seven page URLs served the application directly on a local static preview, and six desktop/mobile browser checks passed against that preview, including image loading and the email-draft form. These checks do not establish a successful Vercel deployment. Search indexing remains disabled by the existing robots settings until the public-launch review. Hosting, a live Vercel URL and domain settings have not yet been verified.
+
 **Default mode works without sending visitor information to the server.** A visitor enters four required fields, prepares a draft, and opens it in their own email application or copies the text. The interface explicitly says the enquiry has not yet been sent. Information stays in React memory and is not saved in browser storage. The email application must be configured on the visitor’s device; copying is the alternative.
 
 The optional direct-send endpoint is included but disabled by default. To activate it:
