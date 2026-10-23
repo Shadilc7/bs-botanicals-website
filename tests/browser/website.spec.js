@@ -229,6 +229,9 @@ test('navigation traps focus on small screens and restores scrolling after dismi
   const toggle = page.locator('.menu-button');
   await toggle.click();
   await expect(page.locator('#main-navigation a').first()).toBeFocused();
+  await expect(page.locator('#main-navigation .menu-email')).toBeVisible();
+  await expect(page.locator('#main-navigation .menu-footer > span')).toHaveText('Zambian origins. International outlook.');
+  expect(await page.locator('#main-navigation .nav-links > a').first().evaluate(el => getComputedStyle(el).fontFamily)).toContain('DM Sans');
   expect(await page.evaluate(() => document.body.style.overflow)).toBe('hidden');
   await page.keyboard.press('Shift+Tab');
   await expect(toggle).toBeFocused();

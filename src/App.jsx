@@ -52,7 +52,7 @@ function Header() {
     <Logo/>
     <nav ref={nav} aria-label="Main navigation" aria-hidden={compact && !menuOpen ? true : undefined} inert={compact && !menuOpen} className={menuOpen ? 'main-nav is-open' : 'main-nav'} id="main-navigation">
       <div className="menu-intro"><span>ROOTED IN ZAMBIA</span><p>A world of possibilities.</p></div>
-      <div className="nav-links">{navigation.map(([path, title], index) => <NavLink to={path} end={path === '/'} key={path} style={{ '--nav-index': index }} onClick={() => setMenuOpen(false)}><span>{title}</span><ArrowUpRight className="menu-link-arrow" size={18} aria-hidden="true"/></NavLink>)}</div>
+      <div className="nav-links">{navigation.map(([path, title], index) => <NavLink to={path} end={path === '/'} key={path} style={{ '--nav-index': index }} onClick={() => setMenuOpen(false)}><span>{title}</span></NavLink>)}</div>
       <div className="menu-footer"><BotanicalArt className="menu-botanical"/><Link className="button button-primary menu-enquiry" to="/contact#enquiry-form" onClick={() => setMenuOpen(false)}>Make an Enquiry<ArrowRight size={17} aria-hidden="true"/></Link><a className="menu-email" href="mailto:info@bs-botanicals.com"><Mail size={15} aria-hidden="true"/>info@bs-botanicals.com</a><span>Zambian origins. International outlook.</span></div>
     </nav>
     <Button to="/contact#enquiry-form" className="header-cta">Make an Enquiry</Button>

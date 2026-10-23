@@ -23,7 +23,7 @@ These are screenshots of the built website, viewable directly on GitHub. The web
 - Individual generated illustrations for six rough gemstone varieties and eight raw botanical ingredients, plus a dedicated gemstone banner. Visible labels distinguish the artwork from actual stock photography.
 - Product-specific enquiry links that go straight to a prefilled form, with a visible product summary.
 - Inline form validation, keyboard focus management, duplicate-send prevention and an email fallback when direct delivery fails.
-- A rounded ivory mobile menu with an animated hamburger/close icon, staggered links, a fading blurred backdrop, a clear active-page marker and an enquiry button. Keyboard focus, Escape/backdrop dismissal, scroll restoration and reduced-motion preferences are supported.
+- A rounded ivory mobile menu with simple DM Sans typography, an animated hamburger/close icon, staggered links, a fading blurred backdrop, a clear active-page marker and an enquiry button. The email address, tagline and botanical decoration remain below the button. Keyboard focus, Escape/backdrop dismissal, scroll restoration and reduced-motion preferences are supported.
 - Individual tea-box images display in a spacious gallery, with one full-width box per row on phones and links to the full-size artwork.
 - A sourcing-information section explaining availability, documentation and delivery discussions without adding unverified claims.
 
