@@ -10,6 +10,21 @@ These are screenshots of the built website, viewable directly on GitHub. The web
 
 [Full desktop screenshot](docs/previews/desktop-full.png) · [Full mobile screenshot](docs/previews/mobile-full.png)
 
+[Gemstone browsing](docs/previews/gemstones.png) · [Enquiry form](docs/previews/enquiry-form.png) · [Mobile wellness concepts](docs/previews/wellness-mobile.png)
+
+## Interface improvements
+
+- Readable 16–17px main copy, 14px desktop navigation, stronger contrast and larger tap targets.
+- A two-line desktop hero and a mobile enquiry action visible in the first screen.
+- A simpler homepage with repeated product sections removed, plus a clear sourcing process.
+- Searchable gemstone cards and botanical search with ingredient-group filters, result counts and empty-state recovery.
+- Product-specific enquiry links that go straight to a prefilled form, with a visible product summary.
+- Inline form validation, keyboard focus management, duplicate-send prevention and an email fallback when direct delivery fails.
+- A mobile menu with focus containment, Escape dismissal and scroll restoration; wellness concepts use readable two-column cards on phones.
+- A sourcing-information section explaining availability, documentation and delivery discussions without adding unverified claims.
+
+Original logo, packaging and sourcing photographs still need to be supplied. Direct email delivery still requires real email settings and a reviewed Privacy Notice. See [asset handoff instructions](docs/ASSET_HANDOFF.md).
+
 ## Run locally
 
 Use Node **22.12+ or 24 LTS** and npm. In this checkout:
@@ -28,6 +43,10 @@ npm test            # API validation, origin checks, gating, failure and rate-li
 npm run test:e2e    # Desktop/mobile browser and automated accessibility checks
 ```
 
+This revision passed seven API tests and 34 desktop/mobile browser tests against the production server, including automated accessibility checks on all seven routes. An additional 42 production layout checks covered 320, 640, 768, 1024, 1280 and 1440px widths. Real inbox delivery remains unverified.
+
+Set `PLAYWRIGHT_BASE_URL` to a running production server to exercise that build; otherwise browser tests start or reuse the Vite development server.
+
 Browser tests use the installed `/usr/bin/chromium`. On another machine, set `CHROMIUM_PATH` to your browser executable. The cloud machine already provides Chromium.
 
 ## Pages and behaviour
@@ -36,13 +55,13 @@ Browser tests use the installed `/usr/bin/chromium`. On another machine, set `CH
 | --- | --- |
 | `/` | Hero, three sourcing areas, company introduction, collection, process and FAQs |
 | `/about` | Company story and approach to business |
-| `/gemstones` | Six named rough gemstone sourcing interests and other Zambian gemstones |
-| `/botanicals` | Eight raw botanical sourcing categories, forms and applications |
+| `/gemstones` | Six searchable rough gemstone sourcing interests and other Zambian gemstones |
+| `/botanicals` | Eight searchable raw botanical sourcing categories, ingredient-group filters, forms and applications |
 | `/womens-wellness` | Five planned concepts, all clearly in development |
 | `/contact` | Four required fields, optional commercial details and direct contact information |
 | `/privacy` | Honest preview information; displays the reviewed notice when one is configured |
 
-Category CTAs preselect the enquiry type. Individual product links also prefill the product. The mobile menu, FAQ accordion, form validation, email draft editing and 404 recovery work without external services. Fonts and images are served locally. No analytics or marketing cookies are installed.
+Category CTAs preselect the enquiry type. Individual product links also prefill the product. The mobile menu, product search and filters, FAQ accordion, form validation, email draft editing and 404 recovery work without external services. Fonts and images are served locally. No analytics or marketing cookies are installed.
 
 ## Enquiries: working preview and production delivery
 
@@ -72,6 +91,8 @@ The server validates fields, limits request size, checks the browser origin, rat
 
 - `src/pages/`: page layouts and content.
 - `src/data.js`: navigation, product lists, FAQs, concepts and search metadata.
+- `src/content/assets.js`: central registry for replacing illustrative artwork with approved assets.
+- `src/components/ProductPortfolio.jsx`: search, filters, product illustrations and prefilled enquiry links.
 - `src/components/ui.jsx`: reusable identity, decorations, buttons and shared sections.
 - `src/styles.css`: design system and responsive layouts.
 - `public/images/`: optimized illustrative WebP images; see `ASSETS.md` for provenance.

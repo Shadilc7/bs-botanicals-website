@@ -40,7 +40,7 @@ test('navigation opens, closes and changes pages', async ({ page }, info) => {
 
 test('product enquiry links preselect their category and product', async ({ page }) => {
   await page.goto('/gemstones');
-  await page.getByRole('link', { name: 'Discuss sourcing' }).first().click();
+  await page.getByRole('link', { name: 'Enquire about Emerald', exact: true }).click();
   await expect(page.getByLabel('I am interested in')).toHaveValue('Rough gemstones');
   await page.getByText('Additional details', { exact: false }).click();
   await expect(page.getByLabel('Product / variety / ingredient')).toHaveValue('Emerald');
@@ -126,9 +126,121 @@ test('unknown paths offer recovery', async ({ page }) => {
 });
 
 test('core pages pass automated WCAG accessibility checks', async ({ page }) => {
-  for (const path of ['/', '/contact', '/womens-wellness']) {
+  test.setTimeout(90000);
+  for (const [path] of pages) {
     await page.goto(path, { waitUntil: 'networkidle' });
     const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(result.violations.map(v => ({ id: v.id, nodes: v.nodes.map(n => ({ target: n.target, issue: n.failureSummary })) })) ).toEqual([]);
+  }
+});
+
+test('gemstone search gives useful results and an escape from empty searches', async ({ page }) => {
+  await page.goto('/gemstones');
+  const search = page.getByRole('searchbox', { name: 'Search gemstones' });
+  await search.fill('AMETHYST');
+  await expect(page.locator('.product-card')).toHaveCount(1);
+  await expect(page.locator('.product-card h3')).toHaveText('Amethyst');
+  await expect(page.getByRole('status')).toContainText('1 variety to explore');
+  await page.getByRole('button', { name: 'Clear search', exact: true }).click();
+  await expect(page.locator('.product-card')).toHaveCount(6);
+  await search.fill('no-matching-variety');
+  await expect(page.getByRole('heading', { name: 'No matching varieties' })).toBeVisible();
+  await page.getByRole('button', { name: 'Clear filters' }).click();
+  await expect(page.locator('.product-card')).toHaveCount(6);
+});
+
+test('ingredient filters and search combine, and product enquiries retain their context', async ({ page }) => {
+  await page.goto('/botanicals');
+  await page.getByRole('button', { name: 'Seeds & kernels', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Seeds & kernels', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.product-card')).toHaveCount(3);
+  await expect(page.locator('.product-card h3')).toHaveText(['Mongongo / Manketti', 'Marula', 'Ximenia']);
+  await page.getByRole('searchbox', { name: 'Search ingredients' }).fill('hibiscus');
+  await expect(page.locator('.product-card')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Clear filters' }).click();
+  await expect(page.locator('.product-card')).toHaveCount(8);
+  await page.getByRole('button', { name: 'Leaves & flowers', exact: true }).click();
+  await expect(page.locator('.product-card')).toHaveCount(3);
+  await page.getByRole('link', { name: 'Enquire about Hibiscus', exact: true }).click();
+  await expect(page).toHaveURL(/category=botanicals&product=Hibiscus#enquiry-form$/);
+  await expect(page.locator('.selected-product')).toContainText('Hibiscus');
+  await expect(page.getByLabel('I am interested in')).toHaveValue('Botanicals & superfoods');
+  await page.getByLabel('I am interested in').selectOption('Rough gemstones');
+  await expect(page.locator('.selected-product')).toHaveCount(0);
+});
+
+test('form validation identifies errors, focuses the first field and preserves valid input', async ({ page }) => {
+  await page.goto('/contact?category=gemstones#enquiry-form');
+  const submit = page.getByRole('button', { name: 'Prepare Email Enquiry' });
+  await submit.click();
+  await expect(page.getByLabel('Full name')).toBeFocused();
+  await expect(page.getByLabel('Full name')).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.getByRole('alert')).toContainText('Please check the highlighted fields');
+  await page.getByLabel('Full name').fill('Test Buyer');
+  await page.getByLabel('Email address').fill('not-valid');
+  await page.getByLabel('Your message').fill('Please discuss dried hibiscus samples.');
+  await submit.click();
+  await expect(page.getByLabel('Email address')).toBeFocused();
+  await expect(page.locator('#email-error')).toHaveText('Please enter a valid email address.');
+  await expect(page.getByLabel('Full name')).toHaveValue('Test Buyer');
+  await page.getByLabel('Email address').fill('buyer@example.com');
+  await submit.click();
+  await expect(page.getByRole('heading', { name: 'Your Enquiry Draft Is Ready.' })).toBeFocused();
+});
+
+test('direct delivery prevents duplicate sends and offers email fallback after a failure', async ({ page }) => {
+  await page.route('**/api/config', route => route.fulfill({ json: { deliveryAvailable: true, privacyNotice: 'Reviewed notice test fixture.' } }));
+  let pending, sends = 0;
+  await page.route('**/api/enquiry', route => { sends++; pending = route; });
+  await page.goto('/contact?category=gemstones#enquiry-form');
+  await page.getByLabel('Full name').fill('Test Buyer');
+  await page.getByLabel('Email address').fill('buyer@example.com');
+  await page.getByLabel('Your message').fill('Please discuss rough emerald samples.');
+  await page.getByRole('button', { name: 'Send Enquiry', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Sending your enquiry…' })).toBeDisabled();
+  await page.locator('form').evaluate(form => form.requestSubmit());
+  await expect.poll(() => sends).toBe(1);
+  await pending.fulfill({ status: 502, json: { error: 'Provider unavailable' } });
+  await expect(page.getByRole('alert')).toContainText('We couldn’t send your enquiry.');
+  await page.getByRole('button', { name: 'Prepare an email instead' }).click();
+  await expect(page.getByRole('heading', { name: 'Your Enquiry Draft Is Ready.' })).toBeVisible();
+  await expect(page.locator('.draft-preview')).toContainText('Please discuss rough emerald samples.');
+  expect(sends).toBe(1);
+});
+
+test('static hosting without an API keeps the local email workflow available', async ({ page }) => {
+  await page.route('**/api/config', route => route.fulfill({ contentType: 'text/html', body: '<html>Static host fallback</html>' }));
+  await page.goto('/contact');
+  await expect(page.getByRole('button', { name: 'Prepare Email Enquiry' })).toBeEnabled();
+  await expect(page.getByText('This form does not send or store your details.', { exact: false })).toBeVisible();
+});
+
+test('navigation traps focus on small screens and restores scrolling after dismissal', async ({ page }, info) => {
+  if (info.project.name === 'desktop') await page.setViewportSize({ width: 768, height: 900 });
+  await page.goto('/');
+  const toggle = page.locator('.menu-button');
+  await toggle.click();
+  await expect(page.locator('#main-navigation a').first()).toBeFocused();
+  expect(await page.evaluate(() => document.body.style.overflow)).toBe('hidden');
+  await page.keyboard.press('Shift+Tab');
+  await expect(toggle).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.locator('#main-navigation a').first()).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(toggle).toBeFocused();
+  expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
+});
+
+test('body copy is readable, actions are tappable and mobile hero enquiry stays above the fold', async ({ page }, info) => {
+  await page.goto('/');
+  const size = await page.locator('.hero-introduction').evaluate(element => parseFloat(getComputedStyle(element).fontSize));
+  expect(size).toBeGreaterThanOrEqual(16);
+  for (const button of await page.locator('.hero-actions .button').all()) expect((await button.boundingBox()).height).toBeGreaterThanOrEqual(44);
+  if (info.project.name === 'mobile') {
+    const box = await page.locator('.hero-actions .button-primary').boundingBox();
+    expect(box.y + box.height).toBeLessThan(page.viewportSize().height);
+    await page.goto('/womens-wellness');
+    for (const card of await page.locator('.concept-card').all()) expect((await card.boundingBox()).width).toBeGreaterThanOrEqual(130);
+    expect(await page.locator('.concept-card h3').first().evaluate(element => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(24);
   }
 });

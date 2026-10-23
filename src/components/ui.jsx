@@ -1,7 +1,8 @@
 import { ArrowRight, Globe2, Leaf, Handshake, Gem, Mail, MapPin, Plus, Minus, Sprout, Flower2, Sun } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { concepts, faqs } from '../data';
+import { concepts, faqs, navigation } from '../data';
+import { assets } from '../content/assets';
 
 export function Button({ to, children, secondary = false, className = '', ...props }) {
   const classes = `button ${secondary ? 'button-secondary' : 'button-primary'} ${className}`;
@@ -23,6 +24,7 @@ export function BotanicalArt({ className = '', flower = false }) {
 }
 
 export function Logo({ light = false }) {
+  if (assets.logo) return <Link to="/" className="brand brand-official" aria-label="B’s Botanicals home"><img src={assets.logo.src} alt={assets.logo.alt}/></Link>;
   return <Link to="/" className={`brand ${light ? 'brand-light' : ''}`} aria-label="B’s Botanicals home">
     <span className="brand-mark" aria-hidden="true"><span>B</span><svg viewBox="0 0 60 60"><g fill="currentColor"><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(-18 29 28)"/><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(54 29 28)"/><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(126 29 28)"/><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(198 29 28)"/><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(270 29 28)"/></g><circle cx="29" cy="28" r="4" fill="#b28d5f"/></svg><i>’s</i></span>
     <span className="brand-type"><strong>B’S BOTANICALS</strong><span>Rooted in Zambia. Connected to the World.</span></span>
@@ -43,7 +45,7 @@ export function FAQ({ compact = false }) {
     <BotanicalArt className="faq-leaf" />
     <div className="faq-intro"><Eyebrow>A few things to know</Eyebrow><h2>Common Questions<br/>from Our Partners.</h2><p>A little clarity before<br/>our first conversation.</p></div>
     <div className="faq-list">{faqs.map(([question, answer], i) => <div className={`faq-item ${open === i ? 'is-open' : ''}`} key={question}>
-      <h3><button aria-expanded={open === i} aria-controls={`faq-answer-${i}`} onClick={() => setOpen(open === i ? null : i)}><span className="faq-toggle">{open === i ? <Minus size={13}/> : <Plus size={13}/>}</span>{question}</button></h3>
+      <h3><button type="button" aria-expanded={open === i} aria-controls={`faq-answer-${i}`} onClick={() => setOpen(open === i ? null : i)}><span className="faq-toggle">{open === i ? <Minus size={16}/> : <Plus size={16}/>}</span>{question}</button></h3>
       <div id={`faq-answer-${i}`} hidden={open !== i}><p>{answer}</p></div>
     </div>)}</div>
     <div className="faq-quote"><Sprout size={35} strokeWidth={.8}/><p>Different resources.<br/>Shared opportunities.<br/>A more natural tomorrow.</p><span>✦</span></div>
@@ -53,10 +55,10 @@ export function FAQ({ compact = false }) {
 export function CollectionCards({ large = false }) {
   return <div className={`concept-grid ${large ? 'concept-grid-large' : ''}`}>{concepts.map(({ name, color, motif }, i) => {
     const Icon = motif === 'leaf' ? Sprout : motif === 'sun' ? Sun : Flower2;
-    return <div className="concept-card" style={{ '--concept-color': color }} key={name}>
-      <div className="concept-art"><span className="concept-number">0{i + 1}</span><Icon strokeWidth={.6}/><span className="concept-watermark">B</span></div>
+    return <article className="concept-card" style={{ '--concept-color': color }} key={name}>
+      <div className="concept-art" aria-hidden="true"><span className="concept-number">0{i + 1}</span><Icon strokeWidth={.6}/><span className="concept-watermark">B</span></div>
       <h3>{name}</h3><span className="development-tag">In development</span>
-    </div>;
+    </article>;
   })}</div>;
 }
 
@@ -69,11 +71,13 @@ export function ContactDetails() {
 }
 
 export function PartnershipCTA({ title = 'Let’s Build Something Meaningful Together', text = 'Zambian natural resources. International markets. Long-term partnerships.' }) {
-  return <section className="partnership-cta"><div className="partnership-shade"/><div className="section-shell partnership-inner"><div><Eyebrow>Rooted in possibility</Eyebrow><h2>{title}</h2><p>{text}</p></div><Button to="/contact?category=partnership">Make an Enquiry</Button></div></section>;
+  return <section className="partnership-cta" style={{ backgroundImage: `url(${assets.zambia.src})` }}><div className="partnership-shade"/><div className="section-shell partnership-inner"><div><Eyebrow>Rooted in possibility</Eyebrow><h2>{title}</h2><p>{text}</p></div><Button to="/contact?category=partnership">Make an Enquiry</Button></div></section>;
 }
 
 export function PageHero({ eyebrow, title, children, image = 'hero', category, imagePosition }) {
-  return <section className={`page-hero page-hero-${image}`}><div className="page-hero-image" style={{ backgroundImage: `url(/images/${image}.webp)`, backgroundPosition: imagePosition }}/><BotanicalArt className="page-hero-leaf"/><div className="section-shell"><div className="page-hero-copy"><Eyebrow>{eyebrow}</Eyebrow><h1>{title}</h1>{children}<Button to={`/contact${category ? `?category=${category}` : ''}`}>Make an Enquiry</Button></div></div></section>;
+  const { pathname } = useLocation();
+  const label = navigation.find(([path]) => path === pathname)?.[1];
+  return <section className={`page-hero page-hero-${image}`}><div className="page-hero-image" style={{ backgroundImage: `url(${assets[image].src})`, backgroundPosition: imagePosition }}/><BotanicalArt className="page-hero-leaf"/><div className="section-shell"><div className="page-hero-copy"><nav className="breadcrumbs" aria-label="Breadcrumb"><Link to="/">Home</Link><span aria-hidden="true">/</span><span aria-current="page">{label}</span></nav><Eyebrow>{eyebrow}</Eyebrow><h1>{title}</h1>{children}<Button to={`/contact${category ? `?category=${category}` : ''}#enquiry-form`}>Make an Enquiry</Button></div></div></section>;
 }
 
 export function BulletList({ items }) { return <ul className="bullet-list">{items.map(text => <li key={text}><span>✓</span>{text}</li>)}</ul>; }

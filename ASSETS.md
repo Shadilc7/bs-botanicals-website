@@ -13,3 +13,5 @@ Original generated PNGs remain in `/workspace/generated_images`; website version
 The SVG botanical line art, monogram favicon and brand reconstruction are custom code. The five wellness panels are decorative concept illustrations, not product photographs or approved packaging. Replace the reconstructed identity and concept panels with official supplied assets for final brand approval.
 
 Cormorant Garamond and DM Sans are bundled from Fontsource, with their licences retained in the corresponding npm packages. Lucide icons are provided by `lucide-react` under the ISC licence. Dependencies and their versions are recorded in `package-lock.json`.
+
+The UI refresh adds clearly labelled vector illustrations for product browsing. These are decorative representations, not supplier photographs. Approved replacements are configured in `src/content/assets.js`; see `docs/ASSET_HANDOFF.md`.
