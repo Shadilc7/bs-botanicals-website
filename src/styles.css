@@ -70,8 +70,10 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
 .brand-type { display: flex; flex-direction: column; gap: 6px; }
 .brand-type strong { font-family: var(--serif); font-size: 21px; line-height: 1; letter-spacing: .5px; font-weight: 600; }
 .brand-type > span { font-size: 8px; line-height: 1.6; color: #765c53; white-space: nowrap; }
-.brand-official { width: 230px; height: 64px; }
-.brand-official img { object-fit: contain; }
+/* Frame the original logo's generous transparent canvas without redrawing it. */
+.brand-official { position: relative; display: block; width: 250px; height: 78px; overflow: hidden; }
+.brand-official img { position: absolute; left: 0; top: 50%; width: 100%; height: auto; max-width: none; transform: translateY(-50%); }
+.footer-top .brand-official { width: 300px; height: 90px; max-width: 100%; }
 .main-nav { display: flex; align-items: center; gap: 20px; }
 .main-nav > a { display: flex; align-items: center; min-height: 44px; position: relative; font-size: 14px; line-height: 1.4; white-space: nowrap; }
 .main-nav > a:hover, .main-nav > a.active { color: var(--wine); }
@@ -159,6 +161,8 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
 .wellness-teaser-art > svg { color: var(--gold-text); height: 46px; width: 46px; margin-bottom: 22px; }
 .wellness-teaser-art > p { font-family: var(--serif); font-size: 33px; line-height: 1.15; color: var(--wine); margin-bottom: 22px; }
 .wellness-teaser-art > img { object-fit: contain; max-height: 310px; }
+.wellness-teaser-art.has-photo { padding: 0; min-height: 0; aspect-ratio: 1672 / 941; border-radius: 4px; overflow: hidden; background: #f4eee5; }
+.wellness-teaser-art.has-photo > img { width: 100%; height: 100%; max-height: none; object-fit: contain; }
 .status-pill { display: inline-block; border: 1px solid #bf96a5; border-radius: 24px; color: var(--wine); font-size: 11px; letter-spacing: .5px; padding: 6px 13px; line-height: 1.5; }
 
 /* FAQs keep the complete answer close to the buyer’s question. */
@@ -313,7 +317,8 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
 .development-notice > span { color: var(--wine); font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
 .development-notice p { font-size: 14px; line-height: 1.9; margin-top: 14px; }
 .approved-collection { margin: 0 auto 40px; max-width: 1000px; }
-.approved-collection img { max-height: 420px; object-fit: contain; }
+.approved-collection img { width: 100%; height: auto; object-fit: contain; border-radius: 4px; }
+.approved-collection a { display: block; }
 .approved-collection figcaption { text-align: center; font-size: 14px; margin-top: 16px; color: var(--muted); }
 .wellness-enquiry { max-width: 800px; padding-block: 65px; text-align: center; }
 .wellness-enquiry > svg { color: var(--gold-text); height: 42px; width: 42px; margin-bottom: 20px; }
@@ -516,7 +521,8 @@ section[id], div[id="enquiry-form"] { scroll-margin-top: 0; }
   .brand-mark > i { font-size: 15px; left: 23px; bottom: 1px; }
   .brand-type strong { font-size: 20px; letter-spacing: .1px; }
   .brand-type > span { font-size: 7px; }
-  .brand-official { width: 210px; height: 54px; }
+  .brand-official { width: min(235px, calc(100% - 58px)); height: 70px; }
+  .footer-top .brand-official { width: min(300px, 100%); height: 90px; }
   .header-cta { display: none; }
   .menu-button { margin-left: auto; flex-shrink: 0; width: 46px; height: 46px; }
   .main-nav { left: -16px; right: -16px; padding: 16px 20px 24px; max-height: calc(100dvh - 80px); }

@@ -10,7 +10,7 @@ These are screenshots of the built website, viewable directly on GitHub. The web
 
 [Full desktop screenshot](docs/previews/desktop-full.png) · [Full mobile screenshot](docs/previews/mobile-full.png)
 
-[Gemstone browsing](docs/previews/gemstones.png) · [Enquiry form](docs/previews/enquiry-form.png) · [Mobile wellness concepts](docs/previews/wellness-mobile.png)
+[Gemstone browsing](docs/previews/gemstones.png) · [Enquiry form](docs/previews/enquiry-form.png) · [Mobile wellness concepts](docs/previews/wellness-mobile.png) · [Supplied tea packaging](docs/previews/wellness-packaging.png)
 
 ## Interface improvements
 
@@ -23,7 +23,7 @@ These are screenshots of the built website, viewable directly on GitHub. The web
 - A mobile menu with focus containment, Escape dismissal and scroll restoration; wellness concepts use readable two-column cards on phones.
 - A sourcing-information section explaining availability, documentation and delivery discussions without adding unverified claims.
 
-Original logo, packaging and sourcing photographs still need to be supplied. Direct email delivery still requires real email settings and a reviewed Privacy Notice. See [asset handoff instructions](docs/ASSET_HANDOFF.md).
+Your supplied floral logo is now used in the header and footer. The supplied single-box garden image appears in the home category card; the five-box garden lineup appears in the home wellness feature and Wellness page. The collection remains clearly in development. Genuine sourcing photographs can still replace the illustrative gemstone and botanical artwork. Direct email delivery still requires real email settings and a reviewed Privacy Notice. See [asset handoff instructions](docs/ASSET_HANDOFF.md).
 
 ## Run locally
 
@@ -43,7 +43,7 @@ npm test            # API validation, origin checks, gating, failure and rate-li
 npm run test:e2e    # Desktop/mobile browser and automated accessibility checks
 ```
 
-This revision passed seven API tests and 34 desktop/mobile browser tests against the production server, including automated accessibility checks on all seven routes. An additional 42 production layout checks covered 320, 640, 768, 1024, 1280 and 1440px widths. Real inbox delivery remains unverified.
+This revision passed seven API tests and 34 desktop/mobile browser tests against the production server, including automated accessibility checks on all seven routes. An additional 42 production layout checks covered 320, 640, 768, 1024, 1280 and 1440px widths. After installing the supplied images, the production build and eight relevant desktop/mobile checks passed, including image loading, navigation, layout and accessibility. Real inbox delivery remains unverified.
 
 Set `PLAYWRIGHT_BASE_URL` to a running production server to exercise that build; otherwise browser tests start or reuse the Vite development server.
 
@@ -79,7 +79,7 @@ The server validates fields, limits request size, checks the browser origin, rat
 
 ## Launch items still requiring owner input
 
-- **Official logo and approved five-tea packaging photo:** the originals were not attached as separate files. The wordmark is a custom reconstruction; tea artwork consists of concept panels, not fabricated product packaging. Replace these with approved originals before final brand sign-off.
+- **Logo and packaging:** supplied assets from `images.zip` are installed. The original logo and selected garden packaging images are preserved unchanged; the final concept wording and packaging remain part of the pre-launch review.
 - **Prior conversations:** the linked conversation-reading tool was unavailable in this session. Implementation uses the uploaded PDF and the three visible visual references; assets from those threads could not be recovered.
 - **Founder names:** the PDF marks public display as pending confirmation. The About page contains the company story without publishing unconfirmed personal details.
 - **Tea wording:** the five concepts use the revised PDF labels, carry development notices, and make no medical or efficacy promises. Obtain the indicated review before public release.
@@ -95,7 +95,7 @@ The server validates fields, limits request size, checks the browser origin, rat
 - `src/components/ProductPortfolio.jsx`: search, filters, product illustrations and prefilled enquiry links.
 - `src/components/ui.jsx`: reusable identity, decorations, buttons and shared sections.
 - `src/styles.css`: design system and responsive layouts.
-- `public/images/`: optimized illustrative WebP images; see `ASSETS.md` for provenance.
+- `public/images/`: supplied logo and garden packaging artwork, plus illustrative sourcing images; see `ASSETS.md` for provenance.
 - `server/`: optional API and production static server.
 - `tests/`: API and browser coverage.
 

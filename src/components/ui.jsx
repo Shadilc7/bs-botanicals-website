@@ -24,7 +24,7 @@ export function BotanicalArt({ className = '', flower = false }) {
 }
 
 export function Logo({ light = false }) {
-  if (assets.logo) return <Link to="/" className="brand brand-official" aria-label="B’s Botanicals home"><img src={assets.logo.src} alt={assets.logo.alt}/></Link>;
+  if (assets.logo) return <Link to="/" className="brand brand-official" aria-label="B’s Botanicals home"><img src={assets.logo.src} alt={assets.logo.alt} width={assets.logo.width} height={assets.logo.height} decoding="async"/></Link>;
   return <Link to="/" className={`brand ${light ? 'brand-light' : ''}`} aria-label="B’s Botanicals home">
     <span className="brand-mark" aria-hidden="true"><span>B</span><svg viewBox="0 0 60 60"><g fill="currentColor"><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(-18 29 28)"/><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(54 29 28)"/><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(126 29 28)"/><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(198 29 28)"/><ellipse cx="29" cy="17" rx="7" ry="13" transform="rotate(270 29 28)"/></g><circle cx="29" cy="28" r="4" fill="#b28d5f"/></svg><i>’s</i></span>
     <span className="brand-type"><strong>B’S BOTANICALS</strong><span>Rooted in Zambia. Connected to the World.</span></span>

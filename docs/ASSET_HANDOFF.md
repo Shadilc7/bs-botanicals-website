@@ -1,8 +1,8 @@
 # Replacing the illustrative artwork with original assets
 
-The website currently has no independently supplied logo, product or approved packaging originals. Existing generated compositions and vector illustrations are retained without claiming they show actual stock. No founder portraits or supplier photographs have been invented.
+The supplied floral logo and two garden packaging images from `images.zip` are installed. Their original files are preserved unchanged. Existing generated sourcing compositions and vector illustrations remain illustrative. The instructions below apply to future original gemstone, botanical and company photographs, or replacement brand assets.
 
-## What to supply
+## Additional or replacement assets
 
 | Asset | Recommended file | Placement |
 | --- | --- | --- |
@@ -19,6 +19,8 @@ Supply the product name for each photograph and any required credit. Do not infe
 
 1. Put optimized website copies in `public/images/`, retaining the original high-resolution files separately.
 2. Edit `src/content/assets.js`. `logo` and `teaCollection` accept `{ src, alt }`; the hero, botanical and Zambia entries can be replaced similarly.
+The single-box home category image is configured by `teaFeature`; the five-box home and Wellness image is configured by `teaCollection`.
+
 3. Add individual photos to `products`, using exact product names from `src/data.js`, for example:
 
 ```js
