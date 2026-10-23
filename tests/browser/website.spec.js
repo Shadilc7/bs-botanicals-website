@@ -234,9 +234,63 @@ test('navigation traps focus on small screens and restores scrolling after dismi
   await expect(toggle).toBeFocused();
   await page.keyboard.press('Tab');
   await expect(page.locator('#main-navigation a').first()).toBeFocused();
+  await page.locator('#main-navigation .menu-email').focus();
+  await page.keyboard.press('Tab');
+  await expect(toggle).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(toggle).toBeFocused();
   expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
+});
+
+test('mobile menu closes from the backdrop, an enquiry link and a desktop resize', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'networkidle' });
+  const toggle = page.locator('.menu-button');
+  const menu = page.locator('#main-navigation');
+  await expect(menu).toHaveAttribute('inert', '');
+  await page.evaluate(() => window.scrollTo({ top: 400, behavior: 'instant' }));
+  const scrollPosition = await page.evaluate(() => scrollY);
+  // Tap the sticky control in place: locator.click() may first scroll its document origin into view.
+  const control = await toggle.boundingBox();
+  await page.mouse.click(control.x + control.width / 2, control.y + control.height / 2);
+  await expect(page.locator('main')).toHaveAttribute('inert', '');
+  const accessibility = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+  expect(accessibility.violations.map(violation => violation.id)).toEqual([]);
+  await page.locator('.menu-scrim').click({ position: { x: 4, y: 600 } });
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(toggle).toBeFocused();
+  await expect(menu).toHaveAttribute('inert', '');
+  expect(await page.evaluate(() => scrollY)).toBe(scrollPosition);
+  await toggle.click();
+  await menu.getByRole('link', { name: 'Make an Enquiry', exact: true }).click();
+  await expect(page).toHaveURL(/\/contact#enquiry-form$/);
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('main')).not.toHaveAttribute('inert');
+  await expect(page.locator('main')).toBeFocused();
+  await toggle.click();
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await expect(menu).not.toHaveAttribute('inert');
+  await expect(menu).not.toHaveClass(/is-open/);
+  await expect(menu.getByRole('link', { name: 'Gemstones', exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
+});
+
+test('mobile menu respects reduced motion and rapid toggle changes', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const toggle = page.locator('.menu-button');
+  const menu = page.locator('#main-navigation');
+  await toggle.click();
+  await expect(menu).toBeVisible();
+  expect(await menu.evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');
+  for (let i = 0; i < 4; i++) await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await page.keyboard.press('Escape');
+  await expect(menu).toHaveAttribute('aria-hidden', 'true');
+  await expect(menu).not.toBeVisible();
+  await expect(page.locator('main')).not.toHaveAttribute('inert');
+  await expect(toggle).toBeFocused();
 });
 
 test('body copy is readable, actions are tappable and mobile hero enquiry stays above the fold', async ({ page }, info) => {

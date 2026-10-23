@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowUpRight, Mail, MapPin } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Mail, MapPin } from 'lucide-react';
 import { navigation, seo } from './data';
 import { Logo, Button, BotanicalArt } from './components/ui';
 import Home from './pages/Home';
@@ -9,39 +9,55 @@ import Contact from './pages/Contact';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [compact, setCompact] = useState(() => window.matchMedia('(max-width: 1240px)').matches);
   const location = useLocation();
   const toggle = useRef(null);
   const nav = useRef(null);
   useEffect(() => { setMenuOpen(false); }, [location]);
   useEffect(() => {
-    const media = window.matchMedia('(min-width: 1241px)');
-    const closeOnDesktop = () => { if (media.matches) setMenuOpen(false); };
-    media.addEventListener('change', closeOnDesktop);
-    return () => media.removeEventListener('change', closeOnDesktop);
+    const media = window.matchMedia('(max-width: 1240px)');
+    const updateLayout = () => { setCompact(media.matches); if (!media.matches) setMenuOpen(false); };
+    media.addEventListener('change', updateLayout);
+    return () => media.removeEventListener('change', updateLayout);
   }, []);
   useEffect(() => {
     if (!menuOpen) return;
     const previousOverflow = document.body.style.overflow;
+    const previousPadding = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    if (scrollbarWidth > 0) document.body.style.paddingRight = `${parseFloat(getComputedStyle(document.body).paddingRight) + scrollbarWidth}px`;
     document.body.style.overflow = 'hidden';
-    nav.current?.querySelector('a')?.focus();
+    const background = [...document.querySelectorAll('#main-content, .site-footer')].map(element => [element, element.inert]);
+    background.forEach(([element]) => { element.inert = true; });
+    nav.current?.querySelector('a')?.focus({ preventScroll: true });
     const keydown = e => {
-      if (e.key === 'Escape') { e.preventDefault(); setMenuOpen(false); toggle.current?.focus(); }
+      if (e.key === 'Escape') { e.preventDefault(); setMenuOpen(false); toggle.current?.focus({ preventScroll: true }); }
       if (e.key === 'Tab') {
-        const links = [...nav.current.querySelectorAll('a')];
-        const first = links[0], last = toggle.current;
-        if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        const stops = [...nav.current.querySelectorAll('a, button:not([disabled])'), toggle.current];
+        const index = stops.indexOf(document.activeElement);
+        const next = (index + (e.shiftKey ? -1 : 1) + stops.length) % stops.length;
+        e.preventDefault(); stops[next].focus({ preventScroll: false });
       }
     };
     document.addEventListener('keydown', keydown);
-    return () => { document.body.style.overflow = previousOverflow; document.removeEventListener('keydown', keydown); };
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.paddingRight = previousPadding;
+      background.forEach(([element, inert]) => { element.inert = inert; });
+      document.removeEventListener('keydown', keydown);
+    };
   }, [menuOpen]);
-  return <header className="site-header"><div className="header-inner">
+  const dismissMenu = () => { setMenuOpen(false); toggle.current?.focus({ preventScroll: true }); };
+  return <><header className={`site-header ${menuOpen ? 'menu-is-open' : ''}`}><div className="header-inner">
     <Logo/>
-    <nav ref={nav} aria-label="Main navigation" className={menuOpen ? 'main-nav is-open' : 'main-nav'} id="main-navigation">{navigation.map(([path, title]) => <NavLink to={path} end={path === '/'} key={path}>{title}</NavLink>)}</nav>
+    <nav ref={nav} aria-label="Main navigation" aria-hidden={compact && !menuOpen ? true : undefined} inert={compact && !menuOpen} className={menuOpen ? 'main-nav is-open' : 'main-nav'} id="main-navigation">
+      <div className="menu-intro"><span>ROOTED IN ZAMBIA</span><p>A world of possibilities.</p></div>
+      <div className="nav-links">{navigation.map(([path, title], index) => <NavLink to={path} end={path === '/'} key={path} style={{ '--nav-index': index }} onClick={() => setMenuOpen(false)}><span>{title}</span><ArrowUpRight className="menu-link-arrow" size={18} aria-hidden="true"/></NavLink>)}</div>
+      <div className="menu-footer"><BotanicalArt className="menu-botanical"/><Link className="button button-primary menu-enquiry" to="/contact#enquiry-form" onClick={() => setMenuOpen(false)}>Make an Enquiry<ArrowRight size={17} aria-hidden="true"/></Link><a className="menu-email" href="mailto:info@bs-botanicals.com"><Mail size={15} aria-hidden="true"/>info@bs-botanicals.com</a><span>Zambian origins. International outlook.</span></div>
+    </nav>
     <Button to="/contact#enquiry-form" className="header-cta">Make an Enquiry</Button>
-    <button ref={toggle} type="button" className="menu-button" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-controls="main-navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X/> : <Menu/>}</button>
-  </div>{menuOpen && <button type="button" className="menu-scrim" tabIndex={-1} aria-label="Dismiss navigation" onClick={() => { setMenuOpen(false); toggle.current?.focus(); }}/>}</header>;
+    <button ref={toggle} type="button" className="menu-button" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-controls="main-navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}><span className="menu-icon" aria-hidden="true"><span/><span/><span/></span></button>
+  </div></header><button type="button" className={`menu-scrim ${menuOpen ? 'is-open' : ''}`} tabIndex={-1} aria-label="Dismiss navigation" aria-hidden={!menuOpen} disabled={!menuOpen} onClick={dismissMenu}/></>;
 }
 
 function Footer() {

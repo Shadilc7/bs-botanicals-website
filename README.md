@@ -8,7 +8,7 @@ These are screenshots of the built website, viewable directly on GitHub. The web
 
 ![B’s Botanicals homepage](docs/previews/homepage.png)
 
-[Full desktop screenshot](docs/previews/desktop-full.png) · [Full mobile screenshot](docs/previews/mobile-full.png)
+[Full desktop screenshot](docs/previews/desktop-full.png) · [Full mobile screenshot](docs/previews/mobile-full.png) · [Mobile navigation](docs/previews/mobile-menu.png)
 
 [Gemstone browsing](docs/previews/gemstones.png) · [Botanical browsing](docs/previews/botanicals.png) · [Gemstone banner](docs/previews/gemstone-banner.png) · [Enquiry form](docs/previews/enquiry-form.png) · [Mobile tea packaging](docs/previews/wellness-mobile.png) · [Homepage tea packaging](docs/previews/wellness-packaging.png) · [Individual tea boxes](docs/previews/wellness-gallery.png)
 
@@ -21,7 +21,8 @@ These are screenshots of the built website, viewable directly on GitHub. The web
 - Individual generated illustrations for six rough gemstone varieties and eight raw botanical ingredients, plus a dedicated gemstone banner. Visible labels distinguish the artwork from actual stock photography.
 - Product-specific enquiry links that go straight to a prefilled form, with a visible product summary.
 - Inline form validation, keyboard focus management, duplicate-send prevention and an email fallback when direct delivery fails.
-- A mobile menu with focus containment, Escape dismissal and scroll restoration; individual tea-box images display in a spacious gallery, with one full-width box per row on phones and links to the full-size artwork.
+- A rounded ivory mobile menu with an animated hamburger/close icon, staggered links, a fading blurred backdrop, a clear active-page marker and an enquiry button. Keyboard focus, Escape/backdrop dismissal, scroll restoration and reduced-motion preferences are supported.
+- Individual tea-box images display in a spacious gallery, with one full-width box per row on phones and links to the full-size artwork.
 - A sourcing-information section explaining availability, documentation and delivery discussions without adding unverified claims.
 
 Your supplied floral logo is now used in the header and footer. The supplied labelled Fertility & Reproductive Wellness box appears in the home category; the labelled studio lineup appears in the home wellness feature. The Wellness page shows all five original individual tea-box images with their printed text, replacing the earlier vector cards and unlabelled garden artwork. The collection remains clearly in development. Genuine sourcing photographs can still replace the illustrative gemstone and botanical artwork. Direct email delivery still requires real email settings and a reviewed Privacy Notice. See [asset handoff instructions](docs/ASSET_HANDOFF.md).
@@ -45,6 +46,8 @@ npm run test:e2e    # Desktop/mobile browser and automated accessibility checks
 ```
 
 The API and enquiry workflows were previously verified with seven API tests and 34 desktop/mobile browser tests against the production server. For the labelled packaging update, the production build and eight relevant desktop/mobile browser checks passed, covering asset loading, the five original individual boxes and full-size links, readable layouts and automated WCAG checks across all seven routes. Twelve additional responsive checks covered Home and Wellness at 320, 390, 640, 768, 1024 and 1440px widths. Installed tea files were compared byte-for-byte with the supplied archive. Real inbox delivery remains unverified.
+
+The mobile menu update passed the production build and 14 relevant desktop/mobile browser checks against the built static preview, including accessibility with the menu open, focus containment, background interaction blocking, dismissal, enquiry navigation, desktop resizing and reduced motion. Five additional viewport checks covered 320 × 568, 390 × 844, 640 × 360, 768 × 1024 and 1240 × 900, including opening midway down the page and reaching the enquiry action on short screens.
 
 Set `PLAYWRIGHT_BASE_URL` to a running production server to exercise that build; otherwise browser tests start or reuse the Vite development server.
 
